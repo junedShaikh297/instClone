@@ -6,7 +6,7 @@ export default class Story extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView
-                    contentContainerStyle={{ height: 70, borderWidth: 1, elevation: 5, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}
+                    contentContainerStyle={{ height: 70, elevation: 5, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
