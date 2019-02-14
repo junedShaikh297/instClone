@@ -3,9 +3,7 @@ package com.demoredux;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.cinder92.musicfiles.RNReactNativeGetMusicFilesPackage;
 import com.horcrux.svg.SvgPackage;
-import com.rnfs.RNFSPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -27,9 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNReactNativeGetMusicFilesPackage(),
             new SvgPackage(),
-            new RNFSPackage(),
             new RNGestureHandlerPackage()
       );
     }

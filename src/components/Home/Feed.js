@@ -5,49 +5,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import FeedDetails from "./feedDetails"
 import NavigationService from '../../navigation/navigationServices';
-import * as Progress from 'react-native-progress';
-import MusicFiles from 'react-native-get-music-files';
 import { FlatList } from 'react-native-gesture-handler';
-console.log("package",MusicFiles);
 import Story from "./story"
-var RNFS = require('react-native-fs');
 class Feed extends Component {
-    async componentDidMount() {
-        MusicFiles.getAll({
-            blured: true, // works only when 'cover' is set to true
-            artist: true,
-            duration: true, //default : true
-            cover: false, //default : true,
-            genre: true,
-            title: true,
-            cover: true,
-            minimumSongDuration: 10000, // get songs bigger than 10000 miliseconds duration,
-            fields: ['title', 'albumTitle', 'genre', 'lyrics', 'artwork', 'duration'] // for iOs Version
-        }).then(tracks => {
-            // do your stuff...
-            console.log("tracks", tracks);
-
-        }).catch(error => {
-            // catch the error
-        })
-
-        // this.props.commonAction("Example")
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
-            )
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                // RNFS.readFile(`${RNFS.ExternalStorageDirectoryPath}`)
-                //     .then((result) => {
-                console.log(RNFS.readDir(RNFS.ExternalStorageDirectoryPath));
-                // }).catch((err) => {
-                //     alert(err);
-                // })
-            }
-        } catch (err) {
-            console.warn(err)
-        }
-    }
     render() {
         return (
             <ScrollView contentContainerStyle={styles.container}>
@@ -69,15 +29,15 @@ class Feed extends Component {
                     }
                 </ScrollView> */}
                 <FlatList
-                    ListHeaderComponent={()=>{
+                    ListHeaderComponent={() => {
                         return <Story />
                     }}
-                    data={[0,1,2,3,4]}
-                    renderItem={(d,i)=>{
+                    data={[0, 1, 2, 3, 4]}
+                    renderItem={(d, i) => {
                         return <FeedDetails key={i} />
                     }}
                 />
-                
+
             </ScrollView>
         );
     }

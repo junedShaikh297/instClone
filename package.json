@@ -9,13 +9,8 @@
   "dependencies": {
     "react": "16.6.3",
     "react-native": "0.58.4",
-    "react-native-fs": "^2.13.3",
     "react-native-gesture-handler": "^1.0.15",
-    "react-native-get-music-files": "^2.1.0",
-    "react-native-progress": "^3.5.0",
-    "react-native-progress-bar-animated": "^1.0.6",
     "react-native-svg": "^9.2.4",
-    "react-native-swipeout": "^2.3.6",
     "react-navigation": "^3.2.1",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",

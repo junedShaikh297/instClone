@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, Image, View, FlatList } from 'react-native';
 import CustomIcon from '../icon/svgicon';
-import Swipeout from 'react-native-swipeout';
 import FeedDetails from './feedDetails';
 var swipeoutBtns = [
     {
