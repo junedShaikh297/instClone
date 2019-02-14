@@ -17,7 +17,7 @@ export default class Story extends Component {
                                 <Image
                                     style={{padding:5, height: 40, width: 40, }}
                                     resizeMode="contain"
-                                    source={require("../../assets/target.jpg")} />
+                                    source={require("../assets/target.jpg")} />
                             </TouchableOpacity>
 
                         })

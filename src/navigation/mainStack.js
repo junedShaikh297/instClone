@@ -1,15 +1,12 @@
 import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator, createAppContainer, createDrawerNavigator } from "react-navigation";
-import HomeScreen from "../components/Home"
-import LoginScreen from "../components/Login"
-import DashBoard from "../components/Home/DashBoard"
-import DrawerScreen from "../components/Drawer"
-import Feed from "../components/Home/Feed"
-import Profile from "../components/Home/profile"
-import Setting from "../components/Home/setting"
-import DetailScreen from "../components/Home/details"
-import React, { Component } from 'react';
-import CustomeIcon from "../components/icon/svgicon"
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import LoginScreen from "@screens/login";
+import DrawerScreen from "@screens/drawer";
+import Feed from "@screens/home";
+import Profile from "@screens/profile"
+import Setting from "@screens/settings"
+import React from 'react';
+import CustomeIcon from "@component/svgicon"
+import { Text, TouchableOpacity, View } from 'react-native';
 
 const FeedStack = createStackNavigator({
     Feed: {
@@ -22,9 +19,6 @@ const FeedStack = createStackNavigator({
                 )
             }
         }
-    },
-    DetailFeed: {
-        screen: DetailScreen
     }
 })
 
@@ -121,6 +115,7 @@ const DashBoardTabNavigator = createBottomTabNavigator(
             style: { height: 40 }
         }
     })
+    
 const AppStackNavigator = createStackNavigator(
     {
         DashBoardTabNavigator: DashBoardTabNavigator
@@ -140,10 +135,10 @@ const appDrawer = createDrawerNavigator(
         AppStackNavigator
     }, {
         contentComponent: DrawerScreen
-    })
+})
+
 const Mainstack = createSwitchNavigator(
     {
-        //   Home:HomeScreen,
         Login: {
             screen: LoginScreen
         },

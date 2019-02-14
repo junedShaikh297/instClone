@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, Image, View, FlatList } from 'react-native';
-import CustomIcon from '../icon/svgicon';
-import FeedDetails from './feedDetails';
-var swipeoutBtns = [
-    {
-        text: 'Button'
-    }
-]
+import { StyleSheet, Text, TouchableOpacity, Image, View, FlatList } from 'react-native';
+import CustomIcon from '@component/svgicon';
+import FeedDetails from '@component/feedDetails';
+
 export default class Profile extends Component {
     constructor() {
         super()

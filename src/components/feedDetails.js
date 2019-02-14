@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import styled from "styled-components/native";
-import CustomIcon from "../icon/svgicon";
+import CustomIcon from "./svgicon";
 
 const FeedView = styled.View`
   width:100%;
@@ -111,7 +111,7 @@ export default class FeedDetails extends Component {
                             <Image
                                 style={{ height: 38, width: 38, }}
                                 resizeMode="contain"
-                                source={require("../../assets/target.jpg")} />
+                                source={require("../assets/target.jpg")} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 0.8, justifyContent: "center" }}>
@@ -125,12 +125,12 @@ export default class FeedDetails extends Component {
                             <Image
                                 style={{ padding: 5, height: 15, width: 15, }}
                                 resizeMode="contain"
-                                source={require("../../assets/menu.png")} />
+                                source={require("../assets/menu.png")} />
                         </TouchableOpacity>
                     </View>
                 </FeedHeader>
                 <FeedImage
-                    source={require("../../assets/target.jpg")}
+                    source={require("../assets/target.jpg")}
                 />
                 <FeedBottom>
                     <FeedLike>
@@ -160,14 +160,14 @@ export default class FeedDetails extends Component {
                                 <Image
                                     style={{ height: 22, width: 22 }}
                                     resizeMode="contain"
-                                    source={require("../../assets/target.jpg")}
+                                    source={require("../assets/target.jpg")}
                                 />
                             </View>
                             <View style={{ position: "absolute", overflow: "hidden", left: 12, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderRadius: 22 / 2, }}>
                                 <Image
                                     style={{ height: 22, width: 22 }}
                                     resizeMode="contain"
-                                    source={require("../../assets/user.png")}
+                                    source={require("../assets/user.png")}
                                 />
                             </View>
                             <FeedLikeText style={{ marginLeft: 20 }}>Liked by addy052 and 287,0002 others</FeedLikeText>
@@ -183,7 +183,7 @@ export default class FeedDetails extends Component {
                                     <Image
                                         style={{ height: 35, width: 35 }}
                                         resizeMode="contain"
-                                        source={require("../../assets/target.jpg")}
+                                        source={require("../assets/target.jpg")}
                                     />
                                 </View>
                             </UserProfile>
