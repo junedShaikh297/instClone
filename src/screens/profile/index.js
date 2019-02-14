@@ -4,6 +4,11 @@ import CustomIcon from '@component/svgicon';
 import FeedDetails from '@component/feedDetails';
 
 export default class Profile extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: "Profile",
+        }
+    }
     constructor() {
         super()
         this.state = {
@@ -85,7 +90,7 @@ export default class Profile extends Component {
                         </View>
                     }}
                     renderItem={(d) => {
-                        return !isList ? <View style={{ height: 120, width: 120, borderWidth: 1 }} />:<FeedDetails/>
+                        return !isList ? <View style={{ height: 120, width: 120, borderWidth: 1 }} /> : <FeedDetails />
                     }}
                 />
             </View>

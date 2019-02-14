@@ -6,8 +6,7 @@ import Profile from "@screens/profile"
 import Setting from "@screens/settings"
 import React from 'react';
 import CustomeIcon from "@component/svgicon"
-import { Text, TouchableOpacity, View } from 'react-native';
-
+import { Text, TouchableOpacity, View, Dimensions } from 'react-native';
 const FeedStack = createStackNavigator({
     Feed: {
         screen: Feed,
@@ -15,7 +14,7 @@ const FeedStack = createStackNavigator({
             return {
                 headerTitle: "Feed",
                 headerLeft: (
-                    <TouchableOpacity onPress={() => { navigation.openDrawer() }}><Text style={{ paddingLeft: 20, fontSize: 30 }}>=</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { navigation.openDrawer() }}><CustomeIcon height={25} width={25} name={"camera"} /></TouchableOpacity>
                 )
             }
         }
@@ -25,14 +24,6 @@ const FeedStack = createStackNavigator({
 const ProfileStack = createStackNavigator({
     Profile: {
         screen: Profile,
-        navigationOptions: ({ navigation }) => {
-            return {
-                headerTitle: "Profile",
-                headerLeft: (
-                    <TouchableOpacity onPress={() => { navigation.openDrawer() }}><Text style={{ paddingLeft: 20, fontSize: 30 }}>=</Text></TouchableOpacity>
-                )
-            }
-        }
     }
 })
 
@@ -41,27 +32,18 @@ const profileDrawer = createDrawerNavigator(
         ProfileStack
     }, {
         contentComponent: DrawerScreen,
-        drawerPosition:"right",
-        drawerWidth:200,
-        drawerType:"slide",
-        // style:{},
-        contentOptions:{
-            activeBackgroundColor:"transparent",
-            inactiveBackgroundColor:"transparent"
+        drawerPosition: "right",
+        drawerWidth: 200,
+        drawerType: "slide",
+        contentOptions: {
+            activeBackgroundColor: "transparent",
+            inactiveBackgroundColor: "transparent"
         }
     })
 
 const SettingStack = createStackNavigator({
     Setting: {
         screen: Setting,
-        navigationOptions: ({ navigation }) => {
-            return {
-                headerTitle: "Setting",
-                headerLeft: (
-                    <TouchableOpacity onPress={() => { navigation.openDrawer() }}><Text style={{ paddingLeft: 20, fontSize: 30 }}>=</Text></TouchableOpacity>
-                )
-            }
-        }
     }
 })
 
@@ -81,9 +63,7 @@ const DashBoardTabNavigator = createBottomTabNavigator(
             }
         },
         tabBarComponent: props => {
-            console.log("components", props);
-
-            return <View {...props} style={{ flexDirection: "row",height:40, padding: 12, backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between" }}>
+            return <View {...props} style={{ flexDirection: "row", height: 40, padding: 12, backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between" }}>
                 <TouchableOpacity onPress={() => {
                     props.navigation.navigate("FeedStack")
                 }}>
@@ -115,7 +95,7 @@ const DashBoardTabNavigator = createBottomTabNavigator(
             style: { height: 40 }
         }
     })
-    
+
 const AppStackNavigator = createStackNavigator(
     {
         DashBoardTabNavigator: DashBoardTabNavigator
@@ -123,7 +103,7 @@ const AppStackNavigator = createStackNavigator(
         defaultNavigationOptions: ({ navigation }) => {
             return {
                 headerLeft: (
-                    <TouchableOpacity onPress={() => { navigation.openDrawer() }}><Text style={{ paddingLeft: 20, fontSize: 30 }}>=</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => { navigation.openDrawer() }}><CustomeIcon name={"menu"} /></TouchableOpacity>
                 )
             }
         }
@@ -133,9 +113,17 @@ const AppStackNavigator = createStackNavigator(
 const appDrawer = createDrawerNavigator(
     {
         AppStackNavigator
-    }, {
-        contentComponent: DrawerScreen
-})
+    },
+    {
+        contentComponent: DrawerScreen,
+        drawerPosition: "left",
+        drawerWidth: Dimensions.get("window").width,
+        drawerType: "slide",
+        contentOptions: {
+            activeBackgroundColor: "transparent",
+            inactiveBackgroundColor: "transparent"
+        }
+    })
 
 const Mainstack = createSwitchNavigator(
     {
