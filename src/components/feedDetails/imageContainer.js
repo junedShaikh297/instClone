@@ -61,7 +61,7 @@ class ImageContainer extends Component {
                 }   
             },
             onPanResponderRelease: () => {
-                if (!props._allowScale)
+                if (props._allowScale)
                     props._allowScale(false)
                 setTimeout(()=>{
                     this.setState({isVisible: true})
