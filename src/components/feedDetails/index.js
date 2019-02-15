@@ -1,78 +1,12 @@
-import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, Image, View } from 'react-native';
+import React, { PureComponent } from 'react';
+import { TouchableOpacity, Image, View } from 'react-native';
+import PropTypes from 'prop-types'
 import styled from "styled-components/native";
 import CustomIcon from "../svgicon";
+import ImageContainer from './imageContainer';
 import Header from './header';
 
-const FeedView = styled.View`
-  width:100%;
-  margin-bottom:10px;
-`;
-
-const FeedImage = styled.Image`
-    height:350px;
-    width:100%;
-    resize-mode:contain;
-`;
-const FeedBottom = styled.View`
-    padding-left:12px;
-    padding-right:12px;
-`;
-const FeedLike = styled.View`
-    flex-direction:row;
-    justify-content:flex-start;
-    align-items:center;
-    margin-bottom:5px;
-`
-const FeedComment = styled.View`
-    padding:5px;
-    background-color:#fff;
-`;
-const FeedLikeText = styled.Text`
-    font-Size:14px;
-    font-weight:bold;
-    color:#000;
-`;
-const UserNameText = styled.Text`
-    font-Size:15px;
-    font-weight:bold;
-    color:#000;
-    margin-top:3px;
-`;
-const PhotoCaptionText = styled.Text`
-    font-Size:14px;
-    color:#000;
-    margin-top:3px;
-`;
-
-const PhotoCommentText = styled.Text`
-    font-Size:14px;
-    color:#484848;
-    margin-top:3px;
-`;
-const UploadTimeText = styled.Text`
-    font-Size:10px;
-    color:#484848;
-    margin-top:3px;
-`;
-const PhotoCommentSection = styled.View`
-    flex-direction:row;
-    justify-content:center;
-    align-items:center;
-`;
-const UserProfile = styled.View`
-    flex:0.1;
-    align-items:flex-start;
-    justify-content:flex-start;
-`;
-const CommentsBox = styled.View`
-    flex:0.9;
-`;
-const CommentTextInput = styled.TextInput`
-    height:40px;
-`;
-
-export default class FeedDetails extends Component {
+class FeedDetails extends PureComponent {
     constructor() {
         super();
         this.state = {
@@ -80,13 +14,18 @@ export default class FeedDetails extends Component {
         }
     }
     render() {
+        console.log('image screen rendered')
+        const { data } = this.props;
         return (
             <FeedView>
                 <Header />
-                <FeedImage
-                    source={require("../../assets/target.jpg")}
+                <ImageContainer
+                    data={data}
+                    _allowScale={this.props.allowScale} 
+                    _scaleValue={this.props.scaleValue} 
+                    _imageCenter={this.props.imageCenter} 
                 />
-                <FeedBottom>
+                <FeedBottom style={{marginTop: 5}}>
                     <FeedLike>
                         <View style={{ flex: 0.5, flexDirection: "row", alignItems: "center" }}>
                             <TouchableOpacity onPress={() => { this.setState({ isLike: !this.state.isLike }) }} >
@@ -155,20 +94,75 @@ export default class FeedDetails extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "flex-start"
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});
+FeedDetails.propTypes = {
+    imageCenter: PropTypes.func,
+    allowScale: PropTypes.func,
+    scaleValue: PropTypes.func,
+    data: PropTypes.string
+}
+
+export default FeedDetails;
+
+
+const FeedView = styled.View`
+  width:100%;
+  margin-bottom:10px;
+`;
+
+const FeedBottom = styled.View`
+    padding-left:12px;
+    padding-right:12px;
+`;
+const FeedLike = styled.View`
+    flex-direction:row;
+    justify-content:flex-start;
+    align-items:center;
+    margin-bottom:5px;
+`
+const FeedComment = styled.View`
+    padding:5px;
+    background-color:#fff;
+`;
+const FeedLikeText = styled.Text`
+    font-Size:14px;
+    font-weight:bold;
+    color:#000;
+`;
+const UserNameText = styled.Text`
+    font-Size:15px;
+    font-weight:bold;
+    color:#000;
+    margin-top:3px;
+`;
+const PhotoCaptionText = styled.Text`
+    font-Size:14px;
+    color:#000;
+    margin-top:3px;
+`;
+
+const PhotoCommentText = styled.Text`
+    font-Size:14px;
+    color:#484848;
+    margin-top:3px;
+`;
+const UploadTimeText = styled.Text`
+    font-Size:10px;
+    color:#484848;
+    margin-top:3px;
+`;
+const PhotoCommentSection = styled.View`
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+`;
+const UserProfile = styled.View`
+    flex:0.1;
+    align-items:flex-start;
+    justify-content:flex-start;
+`;
+const CommentsBox = styled.View`
+    flex:0.9;
+`;
+const CommentTextInput = styled.TextInput`
+    height:40px;
+`;
