@@ -30,6 +30,8 @@ class ImageContainer extends Component {
         this._panResponder = PanResponder.create({
             onMoveShouldSetResponderCapture: () => true,
             onMoveShouldSetPanResponderCapture: (e) => {
+                if (!props._imageCenter && !props._allowScale) return false
+
                 let touches = e.nativeEvent.touches;
                 if (touches.length == 2 && this.imageRef) {
                     this.imageRef.measure((x, y, width, height, pageX, pageY)=>{
@@ -53,12 +55,14 @@ class ImageContainer extends Component {
                     if (!this._distance) {
                         this._distance = distance
                     } else {
-                        props._scaleValue(distance - this._distance)
+                        if (props._scaleValue)
+                            props._scaleValue(distance - this._distance)
                     }
                 }   
             },
             onPanResponderRelease: () => {
-                props._allowScale(false)
+                if (!props._allowScale)
+                    props._allowScale(false)
                 setTimeout(()=>{
                     this.setState({isVisible: true})
                 }, 200)
