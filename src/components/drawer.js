@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import NavigationService from '../navigation/navigationServices';
-
+import styled from "styled-components/native";
 export default class Drawer extends Component {
   render() {
     return (

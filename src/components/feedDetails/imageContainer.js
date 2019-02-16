@@ -74,6 +74,7 @@ class ImageContainer extends Component {
     render() {
         return (
             <View 
+                renderToHardwareTextureAndroid
                 ref={(ref)=> this.imageRef = ref} 
                 {...this._panResponder.panHandlers} 
                 style={{height: 350, width: '100%'}}

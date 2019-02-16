@@ -21,64 +21,66 @@ class FeedDetails extends PureComponent {
                 <Header />
                 <ImageContainer
                     data={data}
-                    _allowScale={this.props.allowScale} 
-                    _scaleValue={this.props.scaleValue} 
-                    _imageCenter={this.props.imageCenter} 
+                    _allowScale={this.props.allowScale}
+                    _scaleValue={this.props.scaleValue}
+                    _imageCenter={this.props.imageCenter}
                 />
-                <FeedBottom style={{marginTop: 5}}>
+                <FeedBottom style={{ marginTop: 5 }}>
                     <FeedLike>
-                        <View style={{ flex: 0.5, flexDirection: "row", alignItems: "center" }}>
-                            <TouchableOpacity onPress={() => { this.setState({ isLike: !this.state.isLike }) }} >
+                        <FeedLikeContainer>
+                            <FeedButton normal onPress={() => { this.setState({ isLike: !this.state.isLike }) }} >
                                 {this.state.isLike ?
                                     <CustomIcon viewBox="0 0 500 500" name={"heart"} />
                                     : <CustomIcon name={"like"} />}
 
-                            </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={1} style={{ paddingLeft: 15 }}>
+                            </FeedButton>
+                            <FeedButton>
                                 <CustomIcon name={"comment"} />
-                            </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={1} style={{ paddingLeft: 15 }}>
+                            </FeedButton>
+                            <FeedButton>
                                 <CustomIcon name={"message"} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flex: 0.5, justifyContent: "flex-end", alignItems: "flex-end" }}>
-                            <TouchableOpacity>
+                            </FeedButton>
+                        </FeedLikeContainer>
+                        <FeedBoomarkcontainer>
+                            <FeedButton normal>
                                 <CustomIcon name={"bookmark"} />
-                            </TouchableOpacity>
-                        </View>
+                            </FeedButton>
+                        </FeedBoomarkcontainer>
                     </FeedLike>
-                    <FeedComment>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <View style={{ overflow: "hidden", zIndex: 999, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderWidth: 2, borderRadius: 22 / 2, borderColor: "#fff" }}>
-                                <Image
-                                    style={{ height: 22, width: 22 }}
-                                    resizeMode="contain"
-                                    source={require("../../assets/target.jpg")}
-                                />
-                            </View>
-                            <View style={{ position: "absolute", overflow: "hidden", left: 12, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderRadius: 22 / 2, }}>
-                                <Image
-                                    style={{ height: 22, width: 22 }}
-                                    resizeMode="contain"
-                                    source={require("../../assets/user.png")}
-                                />
-                            </View>
-                            <FeedLikeText style={{ marginLeft: 20 }}>Liked by addy052 and 287,0002 others</FeedLikeText>
-                        </View>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <UserNameText>aliabhatt </UserNameText>
-                            <PhotoCaptionText>Watchyu lookin at ?</PhotoCaptionText>
-                        </View>
-                        <PhotoCommentText>View All 1000 Comments</PhotoCommentText>
-                        <PhotoCommentSection>
-                            <UserProfile>
-                                <View style={{ overflow: "hidden", zIndex: 999, alignItems: "center", justifyContent: "center", height: 35, width: 35, borderRadius: 35 / 2 }}>
-                                    <Image
-                                        style={{ height: 35, width: 35 }}
-                                        resizeMode="contain"
+                    <FeedCommentContainer>
+                        <FeedCommentSubContainer>
+                            <FeedCommentSubContainer>
+                                <View style={{ overflow: "hidden", zIndex: 999, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderWidth: 2, borderRadius: 22 / 2, borderColor: "#fff" }}>
+                                    <UserCommentImage
                                         source={require("../../assets/target.jpg")}
                                     />
                                 </View>
+                                <View style={{ overflow: "hidden",zIndex:99, left: -10, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderRadius: 22 / 2,borderWidth:2,borderColor:"#fff" }}>
+                                    <UserCommentImage
+                                        source={require("../../assets/user.png")}
+                                    />
+                                </View>
+                                <View style={{ overflow: "hidden", left: -20, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderRadius: 22 / 2, }}>
+                                    <UserCommentImage
+                                        source={require("../../assets/user.png")}
+                                    />
+                                </View>
+                            </FeedCommentSubContainer>
+                            <FeedLikeText>Liked by addy052 and 287,0002 others</FeedLikeText>
+                        </FeedCommentSubContainer>
+                        <FeedCommentSubContainer>
+                            <UserNameText>aliabhatt </UserNameText>
+                            <PhotoCaptionText>Watchyu lookin at ?</PhotoCaptionText>
+                        </FeedCommentSubContainer>
+                        <PhotoCommentText>View All 1000 Comments</PhotoCommentText>
+                        <PhotoCommentSection>
+                            <UserProfile>
+                                <CommentImageContainer>
+                                    <UserCommentImage
+                                        textComment
+                                        source={require("../../assets/target.jpg")}
+                                    />
+                                </CommentImageContainer>
                             </UserProfile>
                             <CommentsBox>
                                 <CommentTextInput
@@ -87,7 +89,7 @@ class FeedDetails extends PureComponent {
                             </CommentsBox>
                         </PhotoCommentSection>
                         <UploadTimeText>24 MINUTES AGO</UploadTimeText>
-                    </FeedComment>
+                    </FeedCommentContainer>
                 </FeedBottom>
             </FeedView>
         );
@@ -119,9 +121,13 @@ const FeedLike = styled.View`
     align-items:center;
     margin-bottom:5px;
 `
-const FeedComment = styled.View`
+const FeedCommentContainer = styled.View`
     padding:5px;
     background-color:#fff;
+`;
+
+const FeedCommentSubContainer = styled.View`
+    flex-direction:row;
 `;
 const FeedLikeText = styled.Text`
     font-Size:14px;
@@ -165,4 +171,32 @@ const CommentsBox = styled.View`
 `;
 const CommentTextInput = styled.TextInput`
     height:40px;
+`;
+const FeedButton = styled.TouchableOpacity`
+   padding-left:${props => props.normal ? '0px' : '15px'};
+`;
+const UserCommentImage = styled.Image`
+    resize-mode:contain;
+    height:${props => props.textComment ? '35px' : '22px'};
+    width:${props => props.textComment ? '35px' : '22px'};
+`;
+const CommentImageContainer = styled.View`
+    overflow:hidden;
+    z-index:999;
+    align-items:center;
+    justify-content:center;
+    height:35px;
+    width:35px;
+    border-radius:17.5px;
+`;
+const FeedLikeContainer = styled.View`
+    flex:0.5;
+    flex-direction:row;
+    align-items:center;
+`;
+
+const FeedBoomarkcontainer = styled.View`
+    flex:0.5;
+    justify-content:flex-end;
+    align-items:flex-end;
 `;

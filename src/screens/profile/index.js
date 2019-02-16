@@ -48,7 +48,7 @@ export default class Profile extends Component {
                                         <View
                                             style={{ height: 85, width: 85, marginTop: 7, alignItems: "center", justifyContent: "center" }}>
                                             <Image
-                                                style={{ height: 85, width: 85,  borderRadius: 85 / 2 }}
+                                                style={{ height: 85, width: 85, borderRadius: 85 / 2 }}
                                                 resizeMode="contain"
                                                 source={require("../../assets/pic.png")} />
                                             <TouchableOpacity style={{ position: "absolute", bottom: 0, right: -5, height: 20, width: 20, padding: 5, alignItems: "center", justifyContent: "center", borderRadius: 20 / 2, borderWidth: 3, borderColor: "#fff" }}>
@@ -63,23 +63,23 @@ export default class Profile extends Component {
                                                     {imageData.length}
                                                 </Text>
                                                 <Text style={{ color: "#000" }}>
-                                            posts
+                                                    posts
                                                 </Text>
                                             </View>
                                             <View style={{ paddingHorizontal: 0 }}>
                                                 <Text style={{ fontSize: 18, textAlign: "center", fontWeight: "500", color: "#000" }}>
-                                            373
+                                                    373
                                                 </Text>
                                                 <Text style={{ color: "#000" }}>
-                                            Followers
+                                                    Followers
                                                 </Text>
                                             </View>
                                             <View style={{ paddingHorizontal: 10 }}>
                                                 <Text style={{ fontSize: 18, color: "#000", textAlign: "center", fontWeight: "500" }}>
-                                            420
+                                                    420
                                                 </Text>
                                                 <Text style={{ color: "#000" }}>
-                                            Following
+                                                    Following
                                                 </Text>
                                             </View>
                                         </View>
@@ -99,9 +99,9 @@ export default class Profile extends Component {
                             </View>
                         )
                     }}
-                    renderItem={({item}) => { 
-                        return !isList ? <View style={{ height: 120, flex: 1 / 3, margin: 1}}>
-                            <Image source={{uri: item}} style={{height: '100%', width: '100%'}} resizeMode="cover" />
+                    renderItem={({ item }) => {
+                        return !isList ? <View style={{ height: 120, flex: 1 / 3, margin: 1 }}>
+                            <Image source={{ uri: item }} style={{ height: '100%', width: '100%' }} resizeMode="cover" />
                         </View> : <FeedDetails data={item} />
                     }}
                 />

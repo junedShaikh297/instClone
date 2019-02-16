@@ -125,14 +125,20 @@ const appDrawer = createDrawerNavigator(
         }
     })
 
-const Mainstack = createSwitchNavigator(
+const Mainstack = createStackNavigator(
     {
         Login: {
-            screen: LoginScreen
+            screen: LoginScreen,
+            navigationOptions: () => ({
+                header: null
+            })
         },
         DashBoard: {
-            screen: appDrawer
-        }
+            screen: appDrawer,
+            navigationOptions: () => ({
+                header: null
+            })
+        },
     }
 );
 export default createAppContainer(Mainstack);

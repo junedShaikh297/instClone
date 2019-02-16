@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { StackActions, NavigationActions } from 'react-navigation';
 export default class Login extends Component {
+    _onPress = () => {
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'DashBoard' })],
+        });
+        this.props.navigation.dispatch(resetAction);
+    }
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={()=> this.props.navigation.navigate("DashBoard")}>
+                <TouchableOpacity onPress={() => this._onPress()}>
                     <Text>Login</Text>
                 </TouchableOpacity>
             </View>

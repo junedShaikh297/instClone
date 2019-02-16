@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  FlatList, View, Animated} from 'react-native';
+import { FlatList, View, Animated } from 'react-native';
 import { connect } from "react-redux";
 import styled from "styled-components/native";
 
@@ -13,13 +13,7 @@ class Feed extends Component {
     constructor() {
         super()
         this.state = {
-            imageData: [
-                'https://wallpaperfx.com/uploads/wallpapers/2011/06/13/6093/preview_superb-spring-sunset.jpeg',
-                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
-                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg',
-                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
-                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg'
-            ],
+            imageData: [],
             isAllowed: false,
             top: 0,
             imageHeight: 0,
@@ -29,12 +23,26 @@ class Feed extends Component {
         this._scaleImage = new Animated.Value(1)
     }
 
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({
+                imageData: [
+                    'https://wallpaperfx.com/uploads/wallpapers/2011/06/13/6093/preview_superb-spring-sunset.jpeg',
+                    'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
+                    'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg',
+                    'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
+                    'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg'
+                ]
+            })
+        }, 1000)
+    }
+
     allowScale = (isAllowed) => {
         if (!isAllowed) {
             Animated.timing(this._scaleImage, {
                 toValue: 0,
                 duration: 200
-            }).start(()=>{
+            }).start(() => {
                 this.setState({
                     isAllowed
                 })
@@ -46,10 +54,10 @@ class Feed extends Component {
         }
     }
 
-    imageCenter = (width, height, imageCenterLocation, image)=>{
+    imageCenter = (width, height, imageCenterLocation, image) => {
         this.setState({
-            top: imageCenterLocation - 65 - (height / 2), 
-            imageHeight: height, 
+            top: imageCenterLocation - 65 - (height / 2),
+            imageHeight: height,
             imageWidth: width,
             image
         })
@@ -59,7 +67,7 @@ class Feed extends Component {
         this._scaleImage.setValue(distance)
     }
 
-    
+
     render() {
         const { imageHeight, imageWidth, imageData } = this.state;
         const imageScaleStyle = {
@@ -72,9 +80,9 @@ class Feed extends Component {
                     }),
                 }
             ],
-            position: 'absolute', 
-            height: imageHeight, 
-            width: imageWidth, 
+            position: 'absolute',
+            height: imageHeight,
+            width: imageWidth,
             // backgroundColor: '#fff'
         }
 
@@ -85,29 +93,29 @@ class Feed extends Component {
         })
 
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <FlatList
-                    keyExtractor={(item, index)=> index.toString()}
-                    style={{flex: 1}}
+                    keyExtractor={(item, index) => index.toString()}
+                    style={{ flex: 1 }}
                     ListHeaderComponent={() => {
                         return <Story />
                     }}
                     data={imageData}
-                    renderItem={({item}) => {
-                        return <FeedDetails 
+                    renderItem={({ item }) => {
+                        return <FeedDetails
                             data={item}
-                            allowScale={this.allowScale} 
+                            allowScale={this.allowScale}
                             scaleValue={this.scaleValue}
                             imageCenter={this.imageCenter}
                         />
                     }}
                 />
-                {this.state.isAllowed ? 
-                    <Animated.View 
-                        style={[{position: 'absolute', height: '100%', width: '100%', backgroundColor: backgroundOpacity}]}>
-                        <Animated.View style={[{top: this.state.top}, imageScaleStyle]}>
+                {this.state.isAllowed ?
+                    <Animated.View
+                        style={[{ position: 'absolute', height: '100%', width: '100%', backgroundColor: backgroundOpacity }]}>
+                        <Animated.View style={[{ top: this.state.top }, imageScaleStyle]}>
                             <FeedImage
-                                source={{uri: this.state.image}}
+                                source={{ uri: this.state.image }}
                                 resizeMode="cover"
                             />
                         </Animated.View>
