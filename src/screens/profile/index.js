@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, Image, View, FlatList } from 'react-native';
 import CustomIcon from '@component/svgicon';
 import FeedDetails from '@component/feedDetails';
+import NavigationService from '../../navigation/navigationServices';
 
 export default class Profile extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -51,7 +52,7 @@ export default class Profile extends Component {
                                                 style={{ height: 85, width: 85, borderRadius: 85 / 2 }}
                                                 resizeMode="contain"
                                                 source={require("../../assets/pic.png")} />
-                                            <TouchableOpacity style={{ position: "absolute", bottom: 0, right: -5, height: 20, width: 20, padding: 5, alignItems: "center", justifyContent: "center", borderRadius: 20 / 2, borderWidth: 3, borderColor: "#fff" }}>
+                                            <TouchableOpacity onPress={() => { NavigationService.navigate("SnapStory") }} style={{ position: "absolute", bottom: 0, right: -5, height: 20, width: 20, padding: 5, alignItems: "center", justifyContent: "center", borderRadius: 20 / 2, borderWidth: 3, borderColor: "#fff" }}>
                                                 <CustomIcon name="plus_round" height={18} width={18} />
                                             </TouchableOpacity>
                                         </View>
@@ -92,9 +93,9 @@ export default class Profile extends Component {
                                 </View>
                                 <View style={{ height: 148, borderWidth: 1, borderColor: "red" }} />
                                 <View style={{ height: 48, borderWidth: 0, borderColor: "blue", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                                    <TouchableOpacity onPress={() => { this.onTabPress("MyPost") }} style={{ flex: 1 / 3 }}><Text style={{ textAlign: "center" }}>A</Text></TouchableOpacity>
-                                    <TouchableOpacity onPress={() => { this.onTabPress("Feed") }} style={{ flex: 1 / 3 }}><Text style={{ textAlign: "center" }}>A</Text></TouchableOpacity>
-                                    <TouchableOpacity onPress={() => { this.onTabPress("TagPost") }} style={{ flex: 1 / 3 }}><Text style={{ textAlign: "center" }}>A</Text></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.onTabPress("MyPost") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"gallery"} height={22} width={22} fill={"#21A7F9"} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.onTabPress("Feed") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"post"} height={22} width={22} fill={"#21A7F9"} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.onTabPress("TagPost") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"tag_post"} height={22} width={22} fill={"#21A7F9"} /></TouchableOpacity>
                                 </View>
                             </View>
                         )

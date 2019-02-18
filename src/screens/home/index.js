@@ -8,7 +8,6 @@ import { bindActionCreators } from "redux";
 import FeedDetails from "@component/feedDetails";
 import NavigationService from '../../navigation/navigationServices';
 import Story from "@component/story"
-
 class Feed extends Component {
     constructor() {
         super()

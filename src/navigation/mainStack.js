@@ -1,9 +1,10 @@
 import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator, createAppContainer, createDrawerNavigator } from "react-navigation";
 import LoginScreen from "@screens/login";
 import DrawerScreen from "@screens/drawer";
+import SnapScreen from "@screens/snapStory";
 import Feed from "@screens/home";
-import Profile from "@screens/profile"
-import Setting from "@screens/settings"
+import Profile from "@screens/profile";
+import Setting from "@screens/settings";
 import React from 'react';
 import CustomeIcon from "@component/svgicon"
 import { Text, TouchableOpacity, View, Dimensions } from 'react-native';
@@ -67,23 +68,23 @@ const DashBoardTabNavigator = createBottomTabNavigator(
                 <TouchableOpacity onPress={() => {
                     props.navigation.navigate("FeedStack")
                 }}>
-                    <CustomeIcon name={"trophy"} />
+                    <CustomeIcon name={"home"} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    props.navigation.navigate("ProfileStack")
-                }}>
-                    <CustomeIcon name={"camera"} />
+                <TouchableOpacity>
+                    <CustomeIcon name={"search"} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     props.navigation.navigate("SettingStack")
                 }}>
-                    <CustomeIcon name={"location"} />
+                    <CustomeIcon name={"add_square"} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <CustomeIcon name={"trophy"} />
+                    <CustomeIcon name={"like"} height={22} width={22} />
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <CustomeIcon name={"trophy"} />
+                <TouchableOpacity onPress={() => {
+                    props.navigation.navigate("ProfileStack")
+                }}>
+                    <CustomeIcon name={"profile"} />
                 </TouchableOpacity>
             </View>
         },
@@ -115,7 +116,7 @@ const appDrawer = createDrawerNavigator(
         AppStackNavigator
     },
     {
-        contentComponent: DrawerScreen,
+        contentComponent: SnapScreen,
         drawerPosition: "left",
         drawerWidth: Dimensions.get("window").width,
         drawerType: "slide",
@@ -139,6 +140,9 @@ const Mainstack = createStackNavigator(
                 header: null
             })
         },
+        SnapStory: {
+            screen: SnapScreen,
+        }
     }
 );
 export default createAppContainer(Mainstack);
