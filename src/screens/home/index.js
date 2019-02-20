@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, View, Animated } from 'react-native';
+import { FlatList, View, Animated, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import styled from "styled-components/native";
 
 import { commonAction } from "../../Action/action"
 import { bindActionCreators } from "redux";
 import FeedDetails from "@component/feedDetails";
+import CustomIcon from "@component/svgicon";
 import NavigationService from '../../navigation/navigationServices';
 import Story from "@component/story"
 class Feed extends Component {
@@ -17,23 +18,22 @@ class Feed extends Component {
             top: 0,
             imageHeight: 0,
             imageWidth: 0,
-            image: null
+            image: null,
+            animation: new Animated.Value(1)
         }
         this._scaleImage = new Animated.Value(1)
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                imageData: [
-                    'https://wallpaperfx.com/uploads/wallpapers/2011/06/13/6093/preview_superb-spring-sunset.jpeg',
-                    'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
-                    'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg',
-                    'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
-                    'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg'
-                ]
-            })
-        }, 1000)
+        this.setState({
+            imageData: [
+                'https://wallpaperfx.com/uploads/wallpapers/2011/06/13/6093/preview_superb-spring-sunset.jpeg',
+                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
+                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg',
+                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
+                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg'
+            ]
+        })
     }
 
     allowScale = (isAllowed) => {
@@ -65,6 +65,7 @@ class Feed extends Component {
     scaleValue = (distance) => {
         this._scaleImage.setValue(distance)
     }
+
 
 
     render() {

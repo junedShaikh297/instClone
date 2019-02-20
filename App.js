@@ -23,7 +23,7 @@ class App extends Component {
               }}
             />
             <View style={{ zIndex: 999, height: "100%", opacity: 0, position: 'absolute', width: "100%" }} pointerEvents="none">
-              <Image style={{ height: '100%', width: "100%" }} source={require('./src/assets/comment.jpg')} />
+              <Image style={{ height: '100%', width: "100%" }} source={require('./src/assets/camera.png')} />
             </View>
           </View>
         </PersistGate>

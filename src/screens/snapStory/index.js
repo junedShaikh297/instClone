@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, View, Animated } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
 import HeaderLeft from "@component/header/headerLeft"
@@ -17,7 +17,8 @@ export default class SnapScreen extends Component {
         super();
         this.state = {
             cameraView: false,
-            capture: false
+            capture: false,
+            animation: new Animated.Value(1)
         }
     }
 
@@ -29,15 +30,24 @@ export default class SnapScreen extends Component {
         this.props.navigation.dispatch(resetAction);
     }
 
-    takePicture = async function () {
-        if (this.camera) {
-            const options = { quality: 0.5, base64: true };
-            const data = await this.camera.takePictureAsync(options);
-            console.log(data.uri);
-            this.setState({
-                capture: true
-            })
-        }
+    takePicture = async () => {
+        Animated.timing(this.state.animation, {
+            toValue: 1.5,
+            duration: 150
+        }).start(async () => {
+            Animated.timing(this.state.animation, {
+                toValue: 1,
+                duration: 150
+            }).start();
+            if (this.camera) {
+                const options = { quality: 0.5, base64: true, pauseAfterCapture: true };
+                const data = await this.camera.takePictureAsync(options);
+                console.log(data.uri);
+                this.setState({
+                    capture: true
+                })
+            }
+        });
     };
 
     _cameraSwitch = () => {
@@ -46,8 +56,25 @@ export default class SnapScreen extends Component {
         })
     }
 
+    startAnimation = () => {
+        Animated.timing(this.state.animation, {
+            toValue: 1.5,
+            duration: 500
+        }).start(() => {
+            Animated.timing(this.state.animation, {
+                toValue: 1,
+                duration: 500
+            }).start();
+        });
+    }
+
     render() {
         const { cameraView, capture } = this.state
+        const animatedStyle = {
+            transform: [
+                { scale: this.state.animation }
+            ]
+        }
         return (
             <View style={styles.container}>
                 <RNCamera
@@ -64,25 +91,26 @@ export default class SnapScreen extends Component {
                         console.log(barcodes);
                     }}
                 />
-                {
-                    !capture ?
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            <TouchableOpacity onPress={this.takePicture.bind(this)} style={[styles.capture, { backgroundColor: "transparent" }]}>
-                                <CustomIcon name={"pictures"} height={22} width={22} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { this._cameraSwitch() }} style={[styles.capture, { backgroundColor: "transparent" }]}>
-                                <CustomIcon name={"sync"} height={25} width={25} />
-                            </TouchableOpacity>
-                        </View>
-                        : <View style={styles.sendPic}>
-                            <TouchableOpacity onPress={() => { alert() }} style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 8, width: 90, backgroundColor: "#fff", borderRadius: 50 }}>
-                                <Text style={{ color: "#000", fontSize: 16 }}>Send</Text>
-                                <CustomIcon name={"right_arrow"} height={25} width={20} fill={"#000"} />
-                            </TouchableOpacity>
-                        </View>
-                }
+                {/* {
+                    !capture ? */}
+                <View style={{ flexDirection: 'row', justifyContent: 'center', backgroundColor: "transparent" }}>
+                    <TouchableOpacity onPress={this.takePicture.bind(this)} style={[styles.capture, { backgroundColor: "transparent" }]}>
+                        <CustomIcon name={"pictures"} height={22} width={22} />
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={1} onPress={this.takePicture}>
+                        <Animated.View style={[styles.capture, animatedStyle]} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { this._cameraSwitch() }} style={[styles.capture, { backgroundColor: "transparent" }]}>
+                        <CustomIcon name={"sync"} height={25} width={25} />
+                    </TouchableOpacity>
+                </View>
+                {/* //         : <View style={styles.sendPic}>
+                //             <TouchableOpacity onPress={() => { alert(0) }} style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 8, width: 90, backgroundColor: "#fff", borderRadius: 50 }}>
+                //                 <Text style={{ color: "#000", fontSize: 16 }}>Send</Text>
+                //                 <CustomIcon name={"right_arrow"} height={25} width={20} fill={"#000"} />
+                //             </TouchableOpacity>
+                //         </View>
+                // } */}
             </View>
 
         );

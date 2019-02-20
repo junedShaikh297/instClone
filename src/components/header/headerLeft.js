@@ -8,11 +8,11 @@ export default class HeaderLeft extends Component {
         alert("called")
     }
     render() {
-        let { name } = this.props
+        let { name,color } = this.props
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => this._onPress()}>
-                    <CustomIcon name={name} height={22} width={22}  />
+                    <CustomIcon name={name} height={18} width={18} color={color} />
                 </TouchableOpacity>
             </View>
         );

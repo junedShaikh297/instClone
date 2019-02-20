@@ -1,21 +1,70 @@
 import React, { PureComponent } from 'react';
-import { TouchableOpacity, Image, View } from 'react-native';
+import { TouchableOpacity, Image, Dimensions, Animated, View } from 'react-native';
 import PropTypes from 'prop-types'
 import styled from "styled-components/native";
 import CustomIcon from "../svgicon";
 import ImageContainer from './imageContainer';
 import Header from './header';
-
+const { width } = Dimensions.get("window")
+const centerHeart = width / 2
 class FeedDetails extends PureComponent {
     constructor() {
         super();
         this.state = {
-            isLike: false
+            isLike: false,
+            isLikeIcon: false,
+            animation: new Animated.Value(1)
         }
+        this.animationHeart = new Animated.Value(1);
+    }
+    startAnimation = () => {
+        // alert(0)
+        Animated.timing(this.state.animation, {
+            toValue: 1.5,
+            duration: 100
+        }).start(() => {
+            Animated.spring(this.state.animation, {
+                toValue: 1,
+                tension: 8
+                // duration
+            }).start();
+        });
+    }
+    onPress = () => {
+        Animated.timing(this.animationHeart, {
+            toValue: 0.5,
+            // speed: 20
+            duration: 500,
+            // useNativeDriver:true
+            // tension:5
+        }).start(() => {
+            // Animated.spring(this.animationHeart, {
+            //     toValue: 1,
+            //     // tension: 8,
+            //     // speed: 20
+            //     // duration:100
+            // }).start();
+            this.animationHeart.setValue(1)
+        });
+        this.setState({ isLike: !this.state.isLike, isLikeIcon: true })
     }
     render() {
-        console.log('image screen rendered')
         const { data } = this.props;
+        const transformHeart = {
+            transform: [{
+                translateY: this.animationHeart.interpolate({
+                    inputRange: [0.5, 1],
+                    outputRange: [-(350 / 2) + 38, 0],
+                    extrapolate: 'clamp'
+                })
+            }],
+            opacity: this.animationHeart.interpolate({
+                inputRange: [0.5, 1],
+                outputRange: [0, 1],
+                extrapolate: 'clamp'
+            })
+        }
+
         return (
             <FeedView>
                 <Header />
@@ -25,15 +74,30 @@ class FeedDetails extends PureComponent {
                     _scaleValue={this.props.scaleValue}
                     _imageCenter={this.props.imageCenter}
                 />
+                {/* <TouchableOpacity activeOpacity={1} style={{ height: 20, width: 20, position: "absolute", top: (350 / 2) + 38, left: centerHeart }} onPress={() => { this.startAnimation() }}>
+                    <Animated.View style={{ transform: [{ scale: this.state.animation }] }} >
+                        <CustomIcon name="like" />
+                    </Animated.View>
+                </TouchableOpacity> */}
                 <FeedBottom style={{ marginTop: 5 }}>
                     <FeedLike>
                         <FeedLikeContainer>
-                            <FeedButton normal onPress={() => { this.setState({ isLike: !this.state.isLike }) }} >
-                                {this.state.isLike ?
-                                    <CustomIcon viewBox="0 0 500 500" name={"heart"} />
-                                    : <CustomIcon name={"like"} />}
-
-                            </FeedButton>
+                            <Animated.View style={[transformHeart,{position:"absolute",left:0,zIndex:999}]}>
+                                <FeedButton normal onPress={() => { this.onPress() }} >
+                                    {this.state.isLike ?
+                                        <CustomIcon viewBox="0 0 500 500" name={"heart"} />
+                                        : <CustomIcon name={"like"} />}
+                                </FeedButton>
+                            </Animated.View>
+                            {/* {
+                                this.state.isLikeIcon ? */}
+                                    <FeedButton normal onPress={() => { this.onPress() }} >
+                                        {this.state.isLike ?
+                                            <CustomIcon viewBox="0 0 500 500" name={"heart"} />
+                                            : <CustomIcon name={"like"} />}
+                                    </FeedButton> 
+                                    {/* : null
+                            } */}
                             <FeedButton>
                                 <CustomIcon name={"comment"} />
                             </FeedButton>
@@ -55,7 +119,7 @@ class FeedDetails extends PureComponent {
                                         source={require("../../assets/target.jpg")}
                                     />
                                 </View>
-                                <View style={{ overflow: "hidden",zIndex:99, left: -10, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderRadius: 22 / 2,borderWidth:2,borderColor:"#fff" }}>
+                                <View style={{ overflow: "hidden", zIndex: 99, left: -10, alignItems: "center", justifyContent: "center", height: 22, width: 22, borderRadius: 22 / 2, borderWidth: 2, borderColor: "#fff" }}>
                                     <UserCommentImage
                                         source={require("../../assets/user.png")}
                                     />

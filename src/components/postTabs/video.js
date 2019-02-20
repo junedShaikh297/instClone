@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
-import CustomIcon from '@component/svgicon';
-
-export default class HeaderRight extends Component {
+export default class Video extends Component {
     _onPress = () => {
-        // alert("right")
-        this.props.navigation.goBack();
-        // console.warn(this.props.);
-
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'DashBoard' })],
+        });
+        this.props.navigation.dispatch(resetAction);
     }
     render() {
-        let { name, text } = this.props
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => this._onPress()}>
-                    {
-                        !text ?
-                            <CustomIcon name={name} height={25} width={22} /> :
-                            <Text style={{ fontSize: 16, fontWeight: "bold", color: "blue" }}>{text}</Text>
-                    }
+                    <Text>Video</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -30,7 +24,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        paddingRight: 10,
         alignItems: "center"
     },
     welcome: {

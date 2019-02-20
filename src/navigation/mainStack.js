@@ -5,6 +5,7 @@ import SnapScreen from "@screens/snapStory";
 import Feed from "@screens/home";
 import Profile from "@screens/profile";
 import Setting from "@screens/settings";
+import UploadPost from "@screens/uploadPhoto";
 import React from 'react';
 import CustomeIcon from "@component/svgicon"
 import { Text, TouchableOpacity, View, Dimensions } from 'react-native';
@@ -48,11 +49,27 @@ const SettingStack = createStackNavigator({
     }
 })
 
+const PhotoStack = createStackNavigator({
+    UploadPost: {
+        screen: UploadPost,
+    },
+})
+
+const SearchStack = createStackNavigator({
+    UploadPost: {
+        screen: UploadPost,
+    },
+})
+
+
+
 const DashBoardTabNavigator = createBottomTabNavigator(
     {
         FeedStack,
+        SearchStack,
+        PhotoStack,
+        SettingStack,
         profileDrawer,
-        SettingStack
     },
     {
         navigationOptions: ({ navigation }) => {
@@ -74,7 +91,7 @@ const DashBoardTabNavigator = createBottomTabNavigator(
                     <CustomeIcon name={"search"} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
-                    props.navigation.navigate("SettingStack")
+                    props.navigation.navigate("PostPhoto")
                 }}>
                     <CustomeIcon name={"add_square"} />
                 </TouchableOpacity>
@@ -88,12 +105,13 @@ const DashBoardTabNavigator = createBottomTabNavigator(
                 </TouchableOpacity>
             </View>
         },
+        
         tabBarOptions: {
-            activeTintColor: "red",
-            inactiveTintColor: "black",
-            showLabel: true,
+            showLabel: false,
             showIcon: false,
-            style: { height: 40 }
+            style: { height: 40 },
+            tabBarVisible:false
+        
         }
     })
 
@@ -142,6 +160,9 @@ const Mainstack = createStackNavigator(
         },
         SnapStory: {
             screen: SnapScreen,
+        },
+        PostPhoto:{
+            screen:UploadPost
         }
     }
 );

@@ -20,22 +20,30 @@ export default class Profile extends Component {
                 'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
                 'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg'
             ],
-            isList: false
+            isList: false,
+            activeIndex:0
         }
     }
     onTabPress = (e) => {
         if (e === "Feed") {
             this.setState({
-                isList: true
+                isList: true,
+                activeIndex:1
             })
-        } else {
+        } else if( e === "MyPost") {
             this.setState({
-                isList: false
+                isList: false,
+                activeIndex:0
+            })
+        }else{
+            this.setState({
+                isList: false,
+                activeIndex:2
             })
         }
     }
     render() {
-        let { isList, imageData } = this.state;
+        let { isList, imageData, activeIndex } = this.state;
         return (
             <View style={styles.container}>
                 <FlatList
@@ -93,9 +101,9 @@ export default class Profile extends Component {
                                 </View>
                                 <View style={{ height: 148, borderWidth: 1, borderColor: "red" }} />
                                 <View style={{ height: 48, borderWidth: 0, borderColor: "blue", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                                    <TouchableOpacity onPress={() => { this.onTabPress("MyPost") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"gallery"} height={22} width={22} fill={"#21A7F9"} /></TouchableOpacity>
-                                    <TouchableOpacity onPress={() => { this.onTabPress("Feed") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"post"} height={22} width={22} fill={"#21A7F9"} /></TouchableOpacity>
-                                    <TouchableOpacity onPress={() => { this.onTabPress("TagPost") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"tag_post"} height={22} width={22} fill={"#21A7F9"} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.onTabPress("MyPost") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"gallery"} height={22} width={22} fill={activeIndex === 0 ? "#21A7F9" :"#c9c9c9"} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.onTabPress("Feed") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"post"} height={22} width={22} fill={activeIndex === 1 ? "#21A7F9":"#c9c9c9"} /></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { this.onTabPress("TagPost") }} style={{ flex: 1 / 3, alignItems: "center" }}><CustomIcon name={"tag_post"} height={22} width={22} fill={activeIndex === 2 ? "#21A7F9" : "#c9c9c9"} /></TouchableOpacity>
                                 </View>
                             </View>
                         )
