@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, Dimensions, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Dimensions, View, CameraRoll } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { RNCamera } from 'react-native-camera';
-import CustomIcon from '@component/svgicon';
 
 const { height } = Dimensions.get("window");
 export default class Photo extends Component {
@@ -21,14 +20,21 @@ export default class Photo extends Component {
         this.props.navigation.dispatch(resetAction);
     }
     takePicture = async function () {
-        if (this.camera) {
-            const options = { quality: 0.5, base64: true, pauseAfterCapture: true };
-            const data = await this.camera.takePictureAsync(options);
-            console.log(data.uri);
-            this.setState({
-                capture: true
-            })
+        try {
+            if (this.camera) {
+                const options = { quality: 0.5, base64: true, pauseAfterCapture: true, orientation:"portrait" };
+                const data = await this.camera.takePictureAsync(options);
+                const saveToDevice = await CameraRoll.saveToCameraRoll(data.uri)
+
+                const imagePath = data.uri.replace('file://', '')
+                this.setState({
+                    capture: true
+                })
+            }
+        } catch (error) {
+            alert(error);
         }
+
     };
 
     _cameraSwitch = () => {
@@ -50,13 +56,14 @@ export default class Photo extends Component {
     }
 
     render() {
-        const { cameraView,isDelete } = this.state
+        const { cameraView, isDelete } = this.state
         return (
             <View style={styles.container}>
                 <RNCamera
                     ref={ref => {
                         this.camera = ref;
                     }}
+                    ratio={"1:1"}
                     style={styles.preview}
                     pauseAfterCapture={true}
                     type={!cameraView ? RNCamera.Constants.Type.back : RNCamera.Constants.Type.front}
@@ -81,8 +88,6 @@ const styles = StyleSheet.create({
     },
     preview: {
         flex: 1,
-        // justifyContent: 'flex-end',
-        // alignItems: 'center',
         marginBottom: 20
     },
     capture: {

@@ -6,6 +6,7 @@ import Feed from "@screens/home";
 import Profile from "@screens/profile";
 import Setting from "@screens/settings";
 import UploadPost from "@screens/uploadPhoto";
+import SearchScreen from "@screens/search";
 import React from 'react';
 import CustomeIcon from "@component/svgicon"
 import { Text, TouchableOpacity, View, Dimensions } from 'react-native';
@@ -56,8 +57,8 @@ const PhotoStack = createStackNavigator({
 })
 
 const SearchStack = createStackNavigator({
-    UploadPost: {
-        screen: UploadPost,
+    Search: {
+        screen: SearchScreen,
     },
 })
 
@@ -87,7 +88,9 @@ const DashBoardTabNavigator = createBottomTabNavigator(
                 }}>
                     <CustomeIcon name={"home"} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    props.navigation.navigate("SearchStack")
+                }}>
                     <CustomeIcon name={"search"} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
@@ -105,13 +108,13 @@ const DashBoardTabNavigator = createBottomTabNavigator(
                 </TouchableOpacity>
             </View>
         },
-        
+
         tabBarOptions: {
             showLabel: false,
             showIcon: false,
             style: { height: 40 },
-            tabBarVisible:false
-        
+            tabBarVisible: false
+
         }
     })
 
@@ -161,8 +164,8 @@ const Mainstack = createStackNavigator(
         SnapStory: {
             screen: SnapScreen,
         },
-        PostPhoto:{
-            screen:UploadPost
+        PostPhoto: {
+            screen: UploadPost
         }
     }
 );
