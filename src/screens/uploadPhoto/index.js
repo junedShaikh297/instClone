@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, Dimensions, View } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, PermissionsAndroid, Dimensions, View } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HeaderLeft from "@component/header/headerLeft"
 import HeaderRight from "@component/header/headerRight"
@@ -8,6 +8,9 @@ import Photo from "@component/postTabs/photo"
 import Video from "@component/postTabs/video"
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 
+import WithStore from "../../comonStore/withStore"
+
+import TodoContainer from '../../comonStore'
 
 const LazyPlaceholder = ({ route }) => (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -15,7 +18,7 @@ const LazyPlaceholder = ({ route }) => (
     </View>
 );
 
-export default class PhotoPost extends Component {
+class PhotoPost extends Component {
     constructor() {
         super();
         this.state = {
@@ -37,6 +40,26 @@ export default class PhotoPost extends Component {
     _onPress = () => {
         alert(12)
     }
+    componentDidMount() {
+        try {
+            PermissionsAndroid.check("android.permission.CAMERA").then(async (res) => {
+                if (!res) {
+                    const granted = await PermissionsAndroid.request(
+                        PermissionsAndroid.PERMISSIONS.CAMERA,
+                    );
+                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                        console.log("Permission granted");
+
+                    } else {
+                        console.log('"Please enable camera permission in device settings.');
+                    }
+                }
+            })
+        } catch (error) {
+            alert(error);
+        }
+
+    }
     _renderScene = ({ route }) => {
         if (
             this.state.routes.indexOf(route) !== this.state.index &&
@@ -47,7 +70,7 @@ export default class PhotoPost extends Component {
 
         switch (route.key) {
             case 'first':
-                return <Gallery />;
+                return <Gallery data={this.props.todoContainer.state.photos} />;
             case 'second':
                 return <Photo onLongPressCamera={this.onLongPressCamera} />;
             case 'third':
@@ -109,21 +132,4 @@ export default class PhotoPost extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});
+export default WithStore([TodoContainer])(PhotoPost)

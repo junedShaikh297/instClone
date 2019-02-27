@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, Animated, TouchableOpacity } from 'react-native';
+import { FlatList, View, Animated, TouchableOpacity, PermissionsAndroid, CameraRoll } from 'react-native';
 import { connect } from "react-redux";
 import styled from "styled-components/native";
 
@@ -9,11 +9,20 @@ import FeedDetails from "@component/feedDetails";
 import CustomIcon from "@component/svgicon";
 import NavigationService from '../../navigation/navigationServices';
 import Story from "@component/story"
+import WithStore from "../../comonStore/withStore"
+
+import TodoContainer from '../../comonStore'
 class Feed extends Component {
     constructor() {
         super()
         this.state = {
-            imageData: [],
+            imageData: [
+                'https://wallpaperfx.com/uploads/wallpapers/2011/06/13/6093/preview_superb-spring-sunset.jpeg',
+                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
+                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg',
+                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
+                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg'
+            ],
             isAllowed: false,
             top: 0,
             imageHeight: 0,
@@ -24,16 +33,22 @@ class Feed extends Component {
         this._scaleImage = new Animated.Value(1)
     }
 
-    componentDidMount() {
-        this.setState({
-            imageData: [
-                'https://wallpaperfx.com/uploads/wallpapers/2011/06/13/6093/preview_superb-spring-sunset.jpeg',
-                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
-                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg',
-                'https://www.wallpapers.net/web/wallpapers/download-full-hd-colourful-lion-artwork-wallpaper/400x400.jpg',
-                'http://www.lol-wallpapers.com/wp-content/uploads/2017/04/Ravenborn-Rakan-by-Sayomi96-HD-Wallpaper-Fan-Art-Artwork-League-of-Legends-lol-2.jpg'
-            ]
-        })
+    async componentDidMount() {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                CameraRoll.getPhotos({ first: 30, assetType: "All" }).then((data) => {
+                    this.props.todoContainer.handleCameraPhotos(data.edges)
+                });
+            } else {
+                console.log('Camera permission denied');
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+
     }
 
     allowScale = (isAllowed) => {
@@ -140,7 +155,8 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+// export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default WithStore([TodoContainer])(Feed);
 
 
 const FeedImage = styled.Image`

@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Image, TouchableOpacity, View } from 'react-native';
-
+import { ScrollView, StyleSheet, Text, Image, TouchableOpacity, View } from 'react-native';
+import CustomIcon from "./svgicon"
 export default class Story extends Component {
     render() {
         return (
             <View style={styles.container}>
                 <ScrollView
-                    contentContainerStyle={{ height: 70, elevation: 5, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}
+                    nestedScrollEnabled={true}
+                    contentContainerStyle={{ height: 70, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
+                    <TouchableOpacity
+                        style={[styles.touchStyle]}>
+                        <CustomIcon name="plus" fill={"#000"} height={18} width={18} />
+                    </TouchableOpacity>
                     {
                         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((d, i) => {
                             return <TouchableOpacity key={i}
-                                style={{ height: 42, width: 42, margin: 5,overflow:"hidden", borderWidth: 2, borderRadius: 30, borderColor: "blue", alignItems: "center", justifyContent: "center" }}>
+                                style={styles.touchStyle}>
                                 <Image
-                                    style={{padding:5, height: 40, width: 40, }}
+                                    style={{ height: 50, width: 50, }}
                                     resizeMode="contain"
-                                    source={require("../assets/target.jpg")} />
+                                    source={require("../assets/user.png")} />
                             </TouchableOpacity>
 
                         })
@@ -42,4 +47,15 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
+    touchStyle: {
+        height: 50,
+        width: 50,
+        margin: 5,
+        overflow: "hidden",
+        borderWidth: 2,
+        borderRadius: 25,
+        borderColor: "blue",
+        alignItems: "center",
+        justifyContent: "center"
+    }
 });

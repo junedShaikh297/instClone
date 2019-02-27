@@ -159,7 +159,6 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: 0,
         borderColor: "pink"
-        // backgroundColor:"#fff"
     },
     close: {
         position: "absolute", top: 20, right: 20
